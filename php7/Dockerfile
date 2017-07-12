@@ -9,7 +9,6 @@ RUN apt-get update &&\
         libmcrypt-dev \
         libpng12-dev \
         imagemagick \
-        sendmail \
         zlib1g-dev
 
 # Configure PHP
