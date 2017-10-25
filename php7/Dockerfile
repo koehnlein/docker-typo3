@@ -1,5 +1,4 @@
 FROM php:7-apache
-MAINTAINER Albrecht Köhnlein <ak@koehnlein.eu>
 
 # Install packages
 RUN apt-get update &&\

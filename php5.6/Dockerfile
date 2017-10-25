@@ -1,5 +1,4 @@
 FROM php:5.6-apache
-MAINTAINER Albrecht Köhnlein <ak@koehnlein.eu>
 
 # Install packages
 RUN apt-get update &&\
