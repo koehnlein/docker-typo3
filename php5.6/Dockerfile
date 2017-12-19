@@ -17,3 +17,5 @@ RUN echo 'always_populate_raw_post_data = -1\nmax_execution_time = 240\nmax_inpu
 
 # Configure Apache as needed
 RUN a2enmod rewrite
+
+WORKDIR /var/www
