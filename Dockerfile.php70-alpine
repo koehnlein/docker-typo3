@@ -11,8 +11,8 @@ RUN apk --no-cache add \
 RUN echo "zend_extension=$(find /usr/lib/php7/modules/ -name xdebug.so)" > /etc/php7/conf.d/xdebug-extension.ini
 
 # add configuration files
-COPY ../../additional/alpine-apache.conf /etc/apache2/conf.d/
-COPY ../../additional/php-* /etc/php7/conf.d/
+COPY additional/alpine-apache.conf /etc/apache2/conf.d/
+COPY additional/php-* /etc/php7/conf.d/
 
 # start apache
 RUN mkdir -p /run/apache2 && mkdir -p /var/www/html
