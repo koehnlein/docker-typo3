@@ -22,7 +22,7 @@ RUN pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug-extension.ini
 
 # add configuration files
-COPY additional/php-* /usr/local/etc/php/conf.d/
+COPY ../additional/php-* /usr/local/etc/php/conf.d/
 
 # Configure Apache as needed
 RUN a2enmod rewrite
