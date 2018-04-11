@@ -20,5 +20,7 @@ There are no prebuilt images for the Alpine variants, so you have to build them 
 
 ```
 docker build . -f php5.6/Dockerfile.alpine --tag akoehnlein/typo3:php56-alpine
+docker build . -f php7.0/Dockerfile.alpine --tag akoehnlein/typo3:php70-alpine
+docker build . -f php7.1/Dockerfile.alpine --tag akoehnlein/typo3:php71-alpine
 ```
 
