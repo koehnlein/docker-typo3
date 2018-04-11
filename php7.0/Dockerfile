@@ -8,7 +8,8 @@ RUN apt-get update &&\
         libmcrypt-dev \
         libpng12-dev \
         imagemagick \
-        zlib1g-dev
+        zlib1g-dev \
+    apt-get clean
 
 # Configure PHP
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
