@@ -4,8 +4,8 @@ FROM alpine:3.5
 RUN apk --no-cache add \
          apache2 \
          php5-apache2 \
-         php5-mysqli php5-soap php5-gd php5-zip php5-pdo php5-mysql php5-json php5-curl php5-xml php5-xdebug \
-         imagemagick
+         php5-mysqli php5-soap php5-gd php5-zip php5-pdo php5-mysql php5-json php5-curl php5-xml php5-dom php5-openssl php5-zlib php5-opcache php5-xdebug \
+         openssl imagemagick
 
 # find xdebug extension
 RUN echo "zend_extension=$(find /usr/lib/php5/modules/ -name xdebug.so)" > /etc/php5/conf.d/xdebug-extension.ini
@@ -15,7 +15,7 @@ COPY additional/alpine-apache.conf /etc/apache2/conf.d/
 COPY additional/php-* /etc/php5/conf.d/
 
 # start apache
-RUN mkdir -p /run/apache2
+RUN mkdir -p /run/apache2 && mkdir -p /var/www/html
 ENTRYPOINT /usr/sbin/httpd -D FOREGROUND
 
 WORKDIR /var/www
