@@ -25,4 +25,7 @@ ENTRYPOINT /usr/sbin/httpd -D FOREGROUND
 
 WORKDIR /var/www
 
+# copy helper scripts
+COPY additional/bash /usr/local/bin/
+
 EXPOSE 80

@@ -28,4 +28,7 @@ RUN ln -s /usr/bin/php7 /usr/bin/php
 
 WORKDIR /var/www
 
+# copy helper scripts
+COPY additional/bash /usr/local/bin/
+
 EXPOSE 80

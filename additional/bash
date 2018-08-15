@@ -1,0 +1,2 @@
+#!/bin/ash
+echo "This is Alpine Linux. Please use 'ash' instead of 'bash'."
