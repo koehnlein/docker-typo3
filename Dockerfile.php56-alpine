@@ -15,6 +15,9 @@ RUN echo "zend_extension=$(find /usr/lib/php5/modules/ -name xdebug.so)" > /etc/
 COPY additional/alpine-apache.conf /etc/apache2/conf.d/
 COPY additional/php-* /etc/php5/conf.d/
 
+# Fix openssl issue https://forge.typo3.org/issues/83643
+COPY additional/opnessl.cnf /etc/ssl/openssl.cnf
+
 # copy composer from official composer image
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV PATH "/tmp/vendor/bin:$PATH"
