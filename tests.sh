@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # some commands must be executable
-composer --version || exit 1
+COMPOSER_ALLOW_SUPERUSER=1 composer --version || exit 1
 bash || exit 1
 
 # some PHP extensions must be loaded
