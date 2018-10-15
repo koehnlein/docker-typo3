@@ -10,6 +10,7 @@ RUN apt-get update \
         libpng-dev \
         imagemagick \
         zlib1g-dev \
+        ssl-cert \
     && apt-get clean
 
 # Configure PHP
@@ -30,6 +31,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV PATH "/tmp/vendor/bin:$PATH"
 
 # Configure Apache as needed
-RUN a2enmod rewrite
+RUN a2enmod rewrite ssl
+RUN a2ensite default-ssl.conf
 
 WORKDIR /var/www
