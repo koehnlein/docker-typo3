@@ -6,7 +6,7 @@ RUN apk --no-cache add \
          apache2 apache2-ssl \
          php7-apache2 \
          php7 php7-mysqli php7-soap php7-gd php7-zip php7-pdo php7-mbstring php7-json php7-curl php7-ctype php7-zlib php7-session php7-dom php7-openssl php7-xml php7-simplexml php7-fileinfo php7-tokenizer php7-iconv php7-opcache php7-xdebug php7-phar php7-intl \
-         openssl imagemagick
+         openssl imagemagick curl
 
 # find xdebug extension
 RUN echo "zend_extension=$(find /usr/lib/php7/modules/ -name xdebug.so)" > /etc/php7/conf.d/xdebug-extension.ini
@@ -21,6 +21,15 @@ COPY additional/opnessl.cnf /etc/ssl/openssl.cnf
 # copy composer from official composer image
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV PATH "/tmp/vendor/bin:$PATH"
+
+# install blackfire
+RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
+        && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/alpine/amd64/$version \
+        && mkdir -p /tmp/blackfire \
+        && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp/blackfire \
+        && mv /tmp/blackfire/blackfire-*.so $(php -r "echo ini_get('extension_dir');")/blackfire.so \
+        && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707\n" > /etc/php7/conf.d/blackfire.ini \
+        && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
 
 # start apache
 RUN mkdir -p /run/apache2 && mkdir -p /var/www/html
