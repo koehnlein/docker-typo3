@@ -1,0 +1,48 @@
+FROM composer:1 AS composer
+FROM alpine:3.9
+
+# Install packages
+ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
+RUN echo "https://repos.php.earth/alpine/v3.9" >> /etc/apk/repositories
+RUN apk --no-cache add \
+         apache2 apache2-ssl \
+         php7.3-apache2 \
+         php7.3 php7.3-mysqli php7.3-soap php7.3-gd php7.3-zip php7.3-pdo php7.3-mbstring php7.3-json php7.3-curl php7.3-ctype php7.3-zlib php7.3-session php7.3-dom php7.3-openssl php7.3-xml php7.3-simplexml php7.3-fileinfo php7.3-tokenizer php7.3-iconv php7.3-opcache php7.3-xdebug php7.3-phar php7.3-intl \
+         openssl imagemagick curl
+
+# find xdebug extension
+RUN echo "zend_extension=$(find /usr/lib/php/7.3/modules/ -name xdebug.so)" > /usr/local/xdebug-extension.ini
+ENV XDEBUG_TARGET=/etc/php/7.3/conf.d/xdebug-extension.ini
+
+# add configuration files
+COPY additional/alpine-apache.conf /etc/apache2/conf.d/
+COPY additional/php-* /etc/php/7.3/conf.d/
+
+# Fix openssl issue https://forge.typo3.org/issues/83643
+COPY additional/opnessl.cnf /etc/ssl/openssl.cnf
+
+# copy composer from official composer image
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+ENV PATH "/tmp/vendor/bin:$PATH"
+
+# install blackfire
+RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
+        && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/alpine/amd64/$version \
+        && mkdir -p /tmp/blackfire \
+        && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp/blackfire \
+        && mv /tmp/blackfire/blackfire-*.so $(php -r "echo ini_get('extension_dir');")/blackfire.so \
+        && chmod a+x $(php -r "echo ini_get('extension_dir');")/blackfire.so \
+        && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707\n" > /etc/php/7.3/conf.d/blackfire.ini \
+        && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
+
+# start apache
+RUN mkdir -p /run/apache2 && mkdir -p /var/www/html
+ENTRYPOINT ["docker-entrypoint"]
+
+WORKDIR /var/www
+
+# copy helper scripts
+COPY additional/scripts/alpine/* /usr/local/bin/
+
+EXPOSE 80
+EXPOSE 443
