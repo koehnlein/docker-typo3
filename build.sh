@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 docker build --pull . -f Dockerfile.php56-alpine -t akoehnlein/typo3:php56-alpine && docker run -it -v `pwd`/tests.sh:/tmp/test.sh --entrypoint "ash" akoehnlein/typo3:php56-alpine /tmp/test.sh && \
 docker build --pull . -f Dockerfile.php70-alpine -t akoehnlein/typo3:php70-alpine && docker run -it -v `pwd`/tests.sh:/tmp/test.sh --entrypoint "ash" akoehnlein/typo3:php70-alpine /tmp/test.sh && \

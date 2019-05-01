@@ -3,13 +3,14 @@ FROM alpine:3.5
 
 # Install packages
 RUN apk --no-cache add \
-         apache2 \
+         apache2 apache2-ssl \
          php7-apache2 \
          php7-mysqli php7-soap php7-gd php7-zip php7-pdo php7-mbstring php7-json php7-curl php7-ctype php7-zlib php7-session php7-dom php7-openssl php7-iconv php7-opcache php7-xdebug php7-phar php7-intl \
          openssl imagemagick curl
 
 # find xdebug extension
-RUN echo "zend_extension=$(find /usr/lib/php7/modules/ -name xdebug.so)" > /etc/php7/conf.d/xdebug-extension.ini
+RUN echo "zend_extension=$(find /usr/lib/php7/modules/ -name xdebug.so)" > /usr/local/xdebug-extension.ini
+ENV XDEBUG_TARGET=/etc/php7/conf.d/xdebug-extension.ini
 
 # add configuration files
 COPY additional/alpine-apache.conf /etc/apache2/conf.d/
@@ -33,7 +34,7 @@ RUN version=$(php7 -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
 
 # start apache
 RUN mkdir -p /run/apache2 && mkdir -p /var/www/html
-ENTRYPOINT /usr/sbin/httpd -D FOREGROUND
+ENTRYPOINT ["docker-entrypoint"]
 
 # create symlinks for compatibility
 RUN ln -s /usr/bin/php7 /usr/bin/php
@@ -41,6 +42,7 @@ RUN ln -s /usr/bin/php7 /usr/bin/php
 WORKDIR /var/www
 
 # copy helper scripts
-COPY additional/bash /usr/local/bin/
+COPY additional/scripts/alpine/* /usr/local/bin/
 
 EXPOSE 80
+EXPOSE 443

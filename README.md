@@ -1,5 +1,17 @@
 LAP (Linux, Apache, PHP) images with all PHP requirements for a basic TYPO3 installation + Xdebug. All images use `/var/www/html` as webroot, so you can switch the images, whenever you want.
 
+## Xdebug
+
+Xdebug can be enabled or disabled by environment variable `PHP_XDEBUG_ENABLED` set to `1` or `0`. The easiest way is to define this variable in your `docker-compose.yml`file:
+
+```yaml
+services:
+  typo3:
+    image: akoehnlein/typo3:...
+    environment:
+      PHP_XDEBUG_ENABLED: 1 # Set 1 to enable.
+```
+
 ## Blackfire integration
 
 All images contain the blackfire.io PHP Probe. See <https://blackfire.io/docs/integrations/docker> to learn how to integrate profiling into your project's setup.
