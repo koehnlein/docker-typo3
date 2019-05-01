@@ -20,7 +20,8 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 # XDebug
 RUN pecl install xdebug-2.5.5 \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug-extension.ini
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/xdebug-extension.ini
+ENV XDEBUG_TARGET=/usr/local/etc/php/conf.d/xdebug-extension.ini
 
 # blackfire
 RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
@@ -41,5 +42,11 @@ ENV PATH "/tmp/vendor/bin:$PATH"
 # Configure Apache as needed
 RUN a2enmod rewrite ssl
 RUN a2ensite default-ssl.conf
+
+# copy helper scripts
+COPY additional/scripts/debian/* /usr/local/bin/
+
+ENTRYPOINT ["docker-entrypoint"]
+CMD ["apache2-foreground"]
 
 WORKDIR /var/www
