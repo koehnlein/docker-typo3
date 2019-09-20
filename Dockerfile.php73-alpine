@@ -7,7 +7,7 @@ RUN echo "https://repos.php.earth/alpine/v3.9" >> /etc/apk/repositories
 RUN apk --no-cache add \
          apache2 apache2-ssl \
          php7.3-apache2 \
-         php7.3 php7.3-mysqli php7.3-soap php7.3-gd php7.3-zip php7.3-pdo php7.3-mbstring php7.3-json php7.3-curl php7.3-ctype php7.3-zlib php7.3-session php7.3-dom php7.3-openssl php7.3-xml php7.3-simplexml php7.3-fileinfo php7.3-tokenizer php7.3-iconv php7.3-opcache php7.3-xdebug php7.3-phar php7.3-intl \
+         php7.3 php7.3-mysqli php7.3-soap php7.3-gd php7.3-zip php7.3-pdo php7.3-mbstring php7.3-json php7.3-curl php7.3-ctype php7.3-zlib php7.3-session php7.3-dom php7.3-openssl php7.3-xml php7.3-simplexml php7.3-fileinfo php7.3-tokenizer php7.3-iconv php7.3-opcache php7.3-xdebug php7.3-phar php7.3-intl php7.3-apcu \
          openssl imagemagick curl
 
 # find xdebug extension

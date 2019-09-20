@@ -5,7 +5,7 @@ FROM alpine:3.5
 RUN apk --no-cache add \
          apache2 apache2-ssl \
          php5-apache2 \
-         php5-mysqli php5-soap php5-gd php5-zip php5-pdo php5-mysql php5-json php5-curl php5-xml php5-dom php5-openssl php5-zlib php5-ctype php5-iconv php5-opcache php5-xdebug php5-phar php5-intl \
+         php5-mysqli php5-soap php5-gd php5-zip php5-pdo php5-mysql php5-json php5-curl php5-xml php5-dom php5-openssl php5-zlib php5-ctype php5-iconv php5-opcache php5-xdebug php5-phar php5-intl php5-apcu \
          openssl imagemagick curl
 
 # find xdebug extension
