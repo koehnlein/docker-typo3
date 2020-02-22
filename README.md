@@ -35,6 +35,7 @@ The following images are based on the official PHP images, which are based on De
 
 There are also alternative images, based on the smaller Alpine Linux images
 
+* `akoehnlein/typo3:php74-alpine`
 * `akoehnlein/typo3:php73-alpine`
 * `akoehnlein/typo3:php72-alpine`
 * `akoehnlein/typo3:php71-alpine`

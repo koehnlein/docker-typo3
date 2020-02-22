@@ -1,5 +1,6 @@
 #!/bin/sh
 
+docker build --pull . -f Dockerfile.php74-alpine -t akoehnlein/typo3:php74-alpine && docker run -it -v `pwd`/tests.sh:/tmp/test.sh --entrypoint "ash" akoehnlein/typo3:php74-alpine /tmp/test.sh && \
 docker build --pull . -f Dockerfile.php73-alpine -t akoehnlein/typo3:php73-alpine && docker run -it -v `pwd`/tests.sh:/tmp/test.sh --entrypoint "ash" akoehnlein/typo3:php73-alpine /tmp/test.sh && \
 docker build --pull . -f Dockerfile.php72-alpine -t akoehnlein/typo3:php72-alpine && docker run -it -v `pwd`/tests.sh:/tmp/test.sh --entrypoint "ash" akoehnlein/typo3:php72-alpine /tmp/test.sh && \
 docker build --pull . -f Dockerfile.php71-alpine -t akoehnlein/typo3:php71-alpine && docker run -it -v `pwd`/tests.sh:/tmp/test.sh --entrypoint "ash" akoehnlein/typo3:php71-alpine /tmp/test.sh && \
