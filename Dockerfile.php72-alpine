@@ -16,6 +16,10 @@ ENV XDEBUG_TARGET=/etc/php7/conf.d/xdebug-extension.ini
 COPY additional/alpine-apache.conf /etc/apache2/conf.d/
 COPY additional/php-* /etc/php7/conf.d/
 
+# set apache logs to stdout and stderr
+RUN ln -s /dev/stdout /var/log/apache2/access.log \
+    && ln -s /dev/stderr /var/log/apache2/error.log
+
 # Fix openssl issue https://forge.typo3.org/issues/83643
 COPY additional/opnessl.cnf /etc/ssl/openssl.cnf
 
