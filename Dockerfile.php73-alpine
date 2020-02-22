@@ -45,6 +45,9 @@ ENTRYPOINT ["docker-entrypoint"]
 
 WORKDIR /var/www
 
+# prepare additional directory
+RUN mkdir /var/www/var && chown apache:apache /var/www/var
+
 # copy helper scripts
 COPY additional/scripts/alpine/* /usr/local/bin/
 

@@ -47,6 +47,9 @@ ENV PATH "/tmp/vendor/bin:$PATH"
 RUN a2enmod rewrite ssl
 RUN a2ensite default-ssl.conf
 
+# prepare additional directory
+RUN mkdir /var/www/var && chown www-data:www-data /var/www/var
+
 # copy helper scripts
 COPY additional/scripts/debian/* /usr/local/bin/
 
