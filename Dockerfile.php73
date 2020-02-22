@@ -23,7 +23,7 @@ RUN echo 'pcre.jit=0' > /usr/local/etc/php/conf.d/workaround.ini
 
 # pecl mdules
 RUN pecl install xdebug apcu \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name apcu.so)" > /usr/local/etc/php/conf.d/apcu-extension.ini \
+    && echo "extension=$(find /usr/local/lib/php/extensions/ -name apcu.so)" > /usr/local/etc/php/conf.d/apcu-extension.ini \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/xdebug-extension.ini
 ENV XDEBUG_TARGET=/usr/local/etc/php/conf.d/xdebug-extension.ini
 

@@ -16,11 +16,11 @@ RUN apt-get update \
 
 # Configure PHP
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
-    docker-php-ext-install -j$(nproc) mysqli soap gd zip mysql apcu xmlwriter
+    docker-php-ext-install -j$(nproc) mysqli soap gd zip mysql xmlwriter
 
 # pecl mdules
-RUN pecl install xdebug-2.5.5 apcu \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name apcu.so)" > /usr/local/etc/php/conf.d/apcu-extension.ini \
+RUN pecl install xdebug-2.5.5 apcu-4.0.11 \
+    && echo "extension=$(find /usr/local/lib/php/extensions/ -name apcu.so)" > /usr/local/etc/php/conf.d/apcu-extension.ini \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/xdebug-extension.ini
 ENV XDEBUG_TARGET=/usr/local/etc/php/conf.d/xdebug-extension.ini
 
