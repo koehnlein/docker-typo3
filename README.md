@@ -24,6 +24,7 @@ See <https://hub.docker.com/r/akoehnlein/typo3/> for compiled images:
 
 The following images are based on the official PHP images, which are based on Debian Linux images
 
+* `akoehnlein/typo3:php74`
 * `akoehnlein/typo3:php73`
 * `akoehnlein/typo3:php72`
 * `akoehnlein/typo3:php71`
