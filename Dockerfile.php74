@@ -17,7 +17,7 @@ RUN apt-get update \
 
 # Configure PHP
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
-    docker-php-ext-install -j$(nproc) mysqli soap gd zip xmlwriter
+    docker-php-ext-install -j$(nproc) mysqli soap gd zip xmlwriter intl
 # memory workaround, see https://stackoverflow.com/a/39535288/7358195
 RUN echo 'pcre.jit=0' > /usr/local/etc/php/conf.d/workaround.ini
 
